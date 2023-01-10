@@ -1,0 +1,41 @@
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import Pokemon from '../models/pokemon';
+//import POKEMONS from '../models/mock-pokemon';
+import PokemonCard from '../components/pokemon-card';
+import PokemonService from '../services/pokemon-service';
+import { Link } from 'react-router-dom';
+import PokemonSearch from '../components/pokemon-search';
+  
+const PokemonList: FunctionComponent = () => {
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  
+  useEffect(() => { 
+    //setPokemons(POKEMONS); 
+    /*fetch api => methode de recupération de données*/ 
+    // fetch('http://localhost:3001/pokemons')
+    // .then(response => response.json())
+    // .then((pokemons)=> {setPokemons(pokemons)
+    // });
+
+    /* recupérer fetch api avec le service (methode(model) en php ) */
+    PokemonService.getPokemons().then((pokemons)=> setPokemons(pokemons));
+  }, []);
+
+  return (
+    <div>
+      <h1 className="center">Pokédex</h1>
+      <Link to={'/pokemons/add'} className="btn btn-floating waves-effect waves-light btn-lareg z-depth-3" style={{margin: '10px auto',
+    display: 'block'}}><i className='material-icons'>add</i></Link>
+      <div className="container"> 
+        <div className="row"> 
+        <PokemonSearch/>
+        {pokemons.map(pokemon => (
+          <PokemonCard key={pokemon.id} pokemon={pokemon} />
+        ))}
+        </div>
+      </div>
+    </div> 
+  );
+}
+  
+export default PokemonList;
