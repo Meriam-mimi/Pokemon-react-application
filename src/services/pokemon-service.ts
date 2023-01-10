@@ -100,7 +100,7 @@ export default class PokemonService {
     return new Promise(resolve => {  
       
      //resolve(this.pokemons.find(pokemon => id === pokemon.id));
-    
+    const test= 12;
     }); 
   }
   
